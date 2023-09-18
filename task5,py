@@ -1,0 +1,69 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+
+
+np.random.seed(0)  
+n_samples = 1000
+
+states = np.random.choice(['CA', 'NY', 'TX'], size=n_samples)
+road_conditions = np.random.choice(['Clear', 'Rain', 'Snow', 'Fog'], size=n_samples)
+weather_conditions = np.random.choice(['Sunny', 'Cloudy', 'Rainy', 'Snowy'], size=n_samples)
+times_of_day = np.random.choice(['Morning', 'Afternoon', 'Evening', 'Night'], size=n_samples)
+latitudes = np.random.uniform(30, 45, size=n_samples)
+longitudes = np.random.uniform(-120, -70, size=n_samples)
+
+data = pd.DataFrame({
+    'state': states,
+    'road_condition': road_conditions,
+    'weather': weather_conditions,
+    'time_of_day': times_of_day,
+    'latitude': latitudes,
+    'longitude': longitudes
+})
+
+
+print(data.head())
+
+
+print(data.info())
+
+
+plt.figure(figsize=(12, 6))
+sns.countplot(x='road_condition', hue='state', data=data)
+plt.title('Accidents by Road Condition and State')
+plt.xlabel('Road Condition')
+plt.ylabel('Count')
+plt.xticks(rotation=45)
+plt.legend(title='State')
+plt.show()
+
+
+plt.figure(figsize=(12, 6))
+sns.countplot(x='weather', hue='state', data=data)
+plt.title('Accidents by Weather Condition and State')
+plt.xlabel('Weather Condition')
+plt.ylabel('Count')
+plt.xticks(rotation=45)
+plt.legend(title='State')
+plt.show()
+
+
+plt.figure(figsize=(12, 6))
+sns.countplot(x='time_of_day', hue='state', data=data)
+plt.title('Accidents by Time of Day and State')
+plt.xlabel('Time of Day')
+plt.ylabel('Count')
+plt.xticks(rotation=45)
+plt.legend(title='State')
+plt.show()
+
+
+plt.figure(figsize=(10, 8))
+plt.scatter(data['longitude'], data['latitude'], alpha=0.5, c='r')
+plt.xlabel('Longitude')
+plt.ylabel('Latitude')
+plt.title('Accident Hotspots')
+plt.show()
